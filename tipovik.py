@@ -1,8 +1,6 @@
 import random
 from examples.graph import *
 
-import numpy as np
-
 x0 = 500
 y0 = 500
 kx = 25
