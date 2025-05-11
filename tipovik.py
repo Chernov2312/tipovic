@@ -24,8 +24,8 @@ def Axis():
     for i in range(0, 1000, 25):
         label(-500 // 25 + i // 25, i, y0 + 20)
         label(500 // 25 - i // 25, x0 - 30, i)
-    label("X", x0 + 430, y0 - 30)
-    label("Y", x0 + 10, y0 - 430)
+    label("X", x0 + 470, y0 - 30)
+    label("Y", x0 + 10, y0 - 470)
 
 
 def func(x):
@@ -83,7 +83,7 @@ def BrushFunc(x):
         x += h
 
 
-def Square():
+def Square_left():
     a = 0
     b = 4
     n = 1000
@@ -97,12 +97,27 @@ def Square():
     for i in x_values:
         diff_values.append(func2(i) - func(i))
     area = sum([i * dx for i in diff_values])
-    label(f"Площадь между графиками функций: {area:.4f}", 0, 0)
+    label(f"Площадь между графиками функций методом левых прямоугольников: {area:.4f}", 0, 0)
+
+
+def Square_right():
+    a = 0
+    b = 4
+    n = 1000
+    h = (b - a) / n
+    area = 0
+    for i in range(n):
+        x_right = a + (i + 1) * h
+        f_val = func2(x_right)
+        g_val = func(x_right)
+        area += abs(max(f_val, g_val) - min(f_val, g_val)) * h
+    label(f"Площадь между графиками функций методом правых прямоугольников: {area:.4f}", 0, 50)
 
 
 Axis()
 DrawFunc(xmin)
 DrawFunc2(xmin)
 BrushFunc(xmin)
-Square()
+Square_left()
+Square_right()
 run()
