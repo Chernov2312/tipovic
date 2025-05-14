@@ -15,27 +15,34 @@ xmax = 500
 def Axis():
     penColor("black")
     i = 0
+    # Построение единичных отрезков
     while i < 1000:
         line(i, y0 - 10, i, y0 + 10)
         line(x0 - 10, i, x0 + 10, i)
         i += 25
+    # Построение осей
     line(0, y0, x0 + 500, y0)
     line(x0, 0, x0, y0 + 500)
+    # Обозначение отрезков
     for i in range(0, 1000, 25):
         label(-500 // 25 + i // 25, i, y0 + 20)
         label(500 // 25 - i // 25, x0 - 30, i)
+    # Обозначение осей
     label("X", x0 + 470, y0 - 30)
     label("Y", x0 + 10, y0 - 470)
 
 
+# первая функция
 def func(x):
     return x ** 2 - 7 * x + 2
 
 
+# вторая функция
 def func2(x):
     return (-5) * x + 10
 
 
+# Построение первой функции
 def DrawFunc(x):
     f = True
     h = 0.01
@@ -53,6 +60,7 @@ def DrawFunc(x):
         x += h
 
 
+# Построение второй функции
 def DrawFunc2(x):
     f = True
     h = 0.01
@@ -70,9 +78,9 @@ def DrawFunc2(x):
         x += h
 
 
+# Закраска области между двумя функциями
 def BrushFunc(x):
     h = 0.0005
-
     penColor("red")
     while x <= xmax:
         xe = x0 + kx * x
@@ -83,37 +91,37 @@ def BrushFunc(x):
         x += h
 
 
+# Поиск площади методом левых прямоугольников
 def Square_left():
+    # Задаём промежуток, число интервалов
     a = 0
     b = 4
     n = 1000
-    dx = (b - a) / n
-    x_values = []
-    i = a
-    while i < b - dx:
-        x_values.append(i)
-        i += (b - dx) / n
-    diff_values = []
-    for i in x_values:
-        diff_values.append(func2(i) - func(i))
-    area = sum([i * dx for i in diff_values])
-    label(f"Площадь между графиками функций методом левых прямоугольников: {area:.4f}", 0, 0)
-
-
-def Square_right():
-    a = 0
-    b = 4
-    n = 1000
-    h = (b - a) / n
+    h = (b - a) / n  # ширина одного участка
     area = 0
     for i in range(n):
-        x_right = a + (i + 1) * h
-        f_val = func2(x_right)
-        g_val = func(x_right)
-        area += abs(max(f_val, g_val) - min(f_val, g_val)) * h
+        # Координата левого конца
+        x = b - (i + 1)* h
+        # Суммируем площадь текущего прямоугольника
+        area += abs(func(x) - func2(x)) * h
+    label(f"Площадь между графиками функций методом левых прямоугольников: {area:.4f}", 0, 0)
+
+# Поиск площади методом правых прямоугольников
+def Square_right():
+    # Задаём промежуток, число интервалов
+    a = 0
+    b = 4
+    n = 1000
+    h = (b - a) / n  # ширина одного участка
+    area = 0
+    for i in range(n):
+        # Координата правого конца
+        x = a + (i + 1) * h
+        # Суммируем площадь текущего прямоугольника
+        area += abs(func(x) - func2(x)) * h
     label(f"Площадь между графиками функций методом правых прямоугольников: {area:.4f}", 0, 50)
 
-
+#Запускаем функции
 Axis()
 DrawFunc(xmin)
 DrawFunc2(xmin)
